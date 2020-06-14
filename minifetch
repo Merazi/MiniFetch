@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# colors
+color1="\033[0;35m" # titles
+color2="\033[0;31m" # ascii logo
+color3="\033[1;32m" # info
+reset="\033[0m"     # reset coloring
+
+
+# system information
+os="$(sed "s/.*=\"//g" /etc/os-release | sed "s/\"//g" | head --lines=1 | awk '{print tolower($0)}')"
+sysarch="$HOSTTYPE"
+de="$XDG_SESSION_DESKTOP"
+shell="$(basename $SHELL)"
+packages="$(dpkg -l | grep -c ^i)"
+kernel="$(uname -r | sed "s/-.*//g")"
+uptime="$(uptime -p | sed "s/up //")"
+
+# output
+printf "+---------------+\n"
+printf "|${color2}    .ooooo+.   ${reset}|  ${color1}os:       ${color3}${os}${reset}\n"
+printf "|${color2}  .oo+....o=+  ${reset}|  ${color1}kernel:   ${color3}version ${kernel}${reset}\n"
+printf "|${color2}  o+  ...  oo  ${reset}|  ${color1}desktop:  ${color3}${de}${reset}\n"
+printf "|${color2}  =   +.  .+.  ${reset}|  ${color1}shell:    ${color3}${shell}${reset}\n"
+printf "|${color2}  oo   ....    ${reset}|  ${color1}packages: ${color3}${packages}${reset}\n"
+printf "|${color2}   ++.         ${reset}|  ${color1}sysarch:  ${color3}${sysarch}${reset}\n"
+printf "|${color2}    .+.        ${reset}|  ${color1}uptime:   ${color3}${uptime}${reset}\n" 
+printf "+---------------+\n"
