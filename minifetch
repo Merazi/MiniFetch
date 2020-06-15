@@ -10,7 +10,7 @@ reset="\033[0m"     # reset coloring
 # system information
 os="$(sed "s/.*=\"//g" /etc/os-release | sed "s/\"//g" | head --lines=1 | awk '{print tolower($0)}')"
 sysarch="$HOSTTYPE"
-de="$XDG_SESSION_DESKTOP"
+de="$(echo $XDG_CURRENT_DESKTOP | awk '{print tolower($0)}')"
 shell="$(basename $SHELL)"
 packages="$(dpkg -l | grep -c ^i)"
 kernel="$(uname -r | sed "s/-.*//g")"
