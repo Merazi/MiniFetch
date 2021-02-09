@@ -10,7 +10,7 @@ reset="\033[0m"     # reset coloring
 # system information
 os="$(sed "s/.*=\"//g" /etc/os-release | sed "s/\"//g" | head --lines=1 | awk '{print tolower($0)}')"
 sysarch="$HOSTTYPE"
-wm="$(wmname)"
+wm=$(wmctrl -m | grep Name | awk -F: '{print tolower($2)}' | xargs)
 shell="$(basename $SHELL)"
 packages="$(dpkg -l | grep -c ^i)"
 kernel="$(uname -r | sed "s/-.*//g")"
@@ -24,5 +24,5 @@ printf "|${color2}  o+  ...  oo  ${reset}|  ${color1}wm:       ${color3}${wm}${r
 printf "|${color2}  =   +.  .+.  ${reset}|  ${color1}shell:    ${color3}${shell}${reset}\n"
 printf "|${color2}  oo   ....    ${reset}|  ${color1}packages: ${color3}${packages}${reset}\n"
 printf "|${color2}   ++.         ${reset}|  ${color1}sysarch:  ${color3}${sysarch}${reset}\n"
-printf "|${color2}    .+.        ${reset}|  ${color1}uptime:   ${color3}${uptime}${reset}\n" 
+printf "|${color2}    .+.        ${reset}|  ${color1}uptime:   ${color3}${uptime}${reset}\n"
 printf "+---------------+\n"
